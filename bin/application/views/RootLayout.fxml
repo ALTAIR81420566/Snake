@@ -5,4 +5,5 @@
 
 <BorderPane minHeight="400.0" minWidth="450.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/8.0.141">
 	<!-- TODO Add Nodes -->
+	<BorderPane  layoutX="125.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" fx:id="pane" />
 </BorderPane>
