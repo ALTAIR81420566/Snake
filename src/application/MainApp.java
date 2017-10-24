@@ -1,9 +1,11 @@
 package application;
 
 import javafx.application.Application;
+import javafx.event.EventHandler;
 import javafx.stage.Stage;
 
 import java.awt.Color;
+import java.awt.event.MouseEvent;
 import java.io.IOException;
 
 import application.controllers.GameLoop;
@@ -12,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.Pane;
@@ -38,13 +41,11 @@ public class MainApp extends Application {
         this.primaryStage.setTitle("AddressApp");
 
         initRootLayout();
-
-        showPersonOverview();
-        
+        showPersonOverview();      	   
         primaryStage.show() ; 
+           
         showPlayground(12, 12);     
-        
-        new GameLoop(snakeGroup, frogGroup).start();
+        new GameLoop(snakeGroup, frogGroup, rootLayout).start();
       
     }
     

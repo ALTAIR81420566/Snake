@@ -6,7 +6,9 @@ import javafx.scene.shape.Circle;
 
 public class Snake extends Animals {
 	
-	public static enum Direction {RIGHT, LEFT, TOP, DOWN};
+	private boolean isAlife = true;
+	
+	public static enum Direction {RIGHT, LEFT, UP, DOWN};
 	
 	private Direction direction = Direction.RIGHT;
 	
@@ -26,12 +28,20 @@ public class Snake extends Animals {
 		body.add(tail);
 	}
 	
+	public boolean isAlife() {
+		return isAlife;
+	}
+	
 	public ArrayList<Circle> getBody(){
 		return body;
 	}
 	
 	public void setDirection(Direction direction) {
 		this.direction = direction;
+	}
+	
+	public Direction getDirection() {
+		return this.direction;
 	}
 	
 	public void eat() {
@@ -50,6 +60,21 @@ public class Snake extends Animals {
 			 lastY = body.get(0).getCenterY();
 			 body.get(0).setCenterX(lastX + 30);
 	
+		}else if(this.direction == Direction.LEFT) {
+			 lastX = body.get(0).getCenterX();
+			 lastY = body.get(0).getCenterY();
+			 body.get(0).setCenterX(lastX - 30);
+	
+		}else if(this.direction == Direction.UP) {
+			 lastX = body.get(0).getCenterX();
+			 lastY = body.get(0).getCenterY();
+			 body.get(0).setCenterY(lastY - 30);
+	
+		}else if(this.direction == Direction.DOWN) {
+			 lastX = body.get(0).getCenterX();
+			 lastY = body.get(0).getCenterY();
+			 body.get(0).setCenterY(lastY + 30);
+	
 		}
 		
 		for(int i = 1; i < body.size(); i++) {
@@ -65,12 +90,24 @@ public class Snake extends Animals {
 		}
 	
 	}
+	
+	private void isSuicide() {
+		for(int i = 1; i < body.size(); i++) {
+			if(body.get(0).getBoundsInParent().intersects(body.get(i).getBoundsInParent())) {
+				for(Circle deathPart : body) {
+					deathPart.setFill(Paint.valueOf("RED"));
+				}
+				isAlife = false;
+				break;
+			}
+		}
+	}
 
 	@Override
 	public void run() {
-		while(true) {
-			
+		while(isAlife) {
 			move();
+			isSuicide();
 			try {
 				Thread.sleep(500);
 			} catch (InterruptedException e) {
