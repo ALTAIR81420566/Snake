@@ -1,5 +1,5 @@
 package application.models;
 
-public abstract class Animals implements Runnable {
+public abstract class Animal implements Runnable {
 	abstract public void move();
 }

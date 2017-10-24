@@ -7,6 +7,7 @@ import javafx.stage.Stage;
 import java.awt.Color;
 import java.awt.event.MouseEvent;
 import java.io.IOException;
+import java.util.Random;
 
 import application.controllers.GameLoop;
 import javafx.application.Application;
@@ -45,7 +46,7 @@ public class MainApp extends Application {
         primaryStage.show() ; 
            
         showPlayground(12, 12);     
-        new GameLoop(snakeGroup, frogGroup, rootLayout).start();
+        new GameLoop(snakeGroup, frogGroup, pane).start();
       
     }
     
@@ -127,5 +128,6 @@ public class MainApp extends Application {
 
     public static void main(String[] args) {
         launch(args);
+    	
     }
 }

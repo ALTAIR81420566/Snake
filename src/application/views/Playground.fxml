@@ -11,6 +11,6 @@
       <Button layoutX="225.0" layoutY="25.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Stop" />
       <TextField layoutX="130.0" layoutY="13.0" prefHeight="25.0" prefWidth="69.0" promptText="Height" />
       <TextField layoutX="130.0" layoutY="44.0" prefHeight="25.0" prefWidth="69.0" promptText="Widht" />
-      <BorderPane fx:id="pane" layoutX="8.0" layoutY="94.0" prefHeight="355.0" prefWidth="353.0" />
+      <BorderPane fx:id="pane" layoutX="8.0" layoutY="94.0" prefHeight="360.0" prefWidth="360.0" />
    </children>
 </AnchorPane>

@@ -3,18 +3,33 @@ import java.util.ArrayList;
 
 import javafx.scene.paint.Paint;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
+import javafx.scene.shape.Shape;
 
-public class Snake extends Animals {
+public class Snake extends Animal {
 	
 	private boolean isAlife = true;
 	
 	public static enum Direction {RIGHT, LEFT, UP, DOWN};
-	
 	private Direction direction = Direction.RIGHT;
 	
 	private ArrayList<Circle> body =  new ArrayList<>();
+	private ArrayList<Rectangle> food =  new ArrayList<>();
+
+	private double borderTop;
+	private double borderRight;
+	private double borderBottom;
+	private double borderLeft;
 	
-	public Snake(int size) {
+	private double lastX = 0;
+	private double lastY = 0;
+	
+	public Snake(int size, double borderBottom, double borderRight, ArrayList<Rectangle> food) {
+		this.borderBottom = borderBottom;
+		this.borderRight = borderRight;
+		this.borderTop = 0;
+		this.borderLeft = 0;
+		this.food = food;
 		int margin = 30;	
 		int lastPart = size * 30 - 15;
 		Circle head =  new Circle(lastPart, 15, 15, Paint.valueOf("YELLOW"));
@@ -45,6 +60,13 @@ public class Snake extends Animals {
 	}
 	
 	public void eat() {
+		for(Rectangle frog : food) {
+			if(body.get(0).getBoundsInParent().intersects(frog.getBoundsInParent())) {
+				body.add(1 , new Circle(lastX, lastY, 10, Paint.valueOf("YELLOW")));
+				body.get(0).setCenterX(frog.getX());
+				body.get(0).setCenterY(frog.getY() + 30);			
+			}
+		}
 		
 	}
 	
@@ -52,28 +74,45 @@ public class Snake extends Animals {
 	@Override
 	public void move() {
 	
-		double lastX = 0;
-		double lastY = 0;
-
-		if(this.direction == Direction.RIGHT) {
-			 lastX = body.get(0).getCenterX();
-			 lastY = body.get(0).getCenterY();
-			 body.get(0).setCenterX(lastX + 30);
-	
-		}else if(this.direction == Direction.LEFT) {
-			 lastX = body.get(0).getCenterX();
-			 lastY = body.get(0).getCenterY();
-			 body.get(0).setCenterX(lastX - 30);
-	
-		}else if(this.direction == Direction.UP) {
-			 lastX = body.get(0).getCenterX();
-			 lastY = body.get(0).getCenterY();
-			 body.get(0).setCenterY(lastY - 30);
-	
-		}else if(this.direction == Direction.DOWN) {
-			 lastX = body.get(0).getCenterX();
-			 lastY = body.get(0).getCenterY();
-			 body.get(0).setCenterY(lastY + 30);
+			if(this.direction == Direction.RIGHT) {
+				 lastX = body.get(0).getCenterX();
+				 lastY = body.get(0).getCenterY();
+				 
+				 if(body.get(0).getCenterX() >= (borderRight - 15)) {
+					 body.get(0).setCenterX(15);
+				 }else {
+					 body.get(0).setCenterX(lastX + 30);
+				 }
+		
+			}else if(this.direction == Direction.LEFT) {
+				 lastX = body.get(0).getCenterX();
+				 lastY = body.get(0).getCenterY();
+				 
+				 if(body.get(0).getCenterX() <= (borderLeft + 15)) {
+					 body.get(0).setCenterX(borderRight - 15);
+				 }else {
+					 body.get(0).setCenterX(lastX - 30);
+				 }
+		
+			}else if(this.direction == Direction.UP) {
+				 lastX = body.get(0).getCenterX();
+				 lastY = body.get(0).getCenterY();
+				 
+				 if(body.get(0).getCenterY() <= (borderTop + 15)) {
+					 body.get(0).setCenterY(borderBottom - 15);
+				 }else {
+					 body.get(0).setCenterY(lastY - 30);
+				 }
+		
+			}else if(this.direction == Direction.DOWN) {
+				 lastX = body.get(0).getCenterX();
+				 lastY = body.get(0).getCenterY();
+				 
+				 if(body.get(0).getCenterY() >= (borderBottom - 15)) {
+					 body.get(0).setCenterY(borderTop + 15);
+				 }else {
+					 body.get(0).setCenterY(lastY + 30);
+				 }
 	
 		}
 		
@@ -107,6 +146,7 @@ public class Snake extends Animals {
 	public void run() {
 		while(isAlife) {
 			move();
+			eat();
 			isSuicide();
 			try {
 				Thread.sleep(500);

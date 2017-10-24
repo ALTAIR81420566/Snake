@@ -2,7 +2,7 @@
 
 <?import javafx.scene.layout.BorderPane?>
 
-<BorderPane minHeight="400.0" minWidth="384.0" prefHeight="436.0" prefWidth="384.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane minHeight="400.0" minWidth="384.0" prefHeight="458.0" prefWidth="384.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
 	<!-- TODO Add Nodes -->
 	<BorderPane fx:id="pane" layoutX="125.0" layoutY="111.0" prefHeight="200.0" prefWidth="200.0" />
 </BorderPane>

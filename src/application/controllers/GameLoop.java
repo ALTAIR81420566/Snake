@@ -1,7 +1,9 @@
 package application.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
+import application.models.Frog;
 import application.models.Snake;
 import application.models.Snake.Direction;
 import javafx.scene.Group;
@@ -9,22 +11,23 @@ import javafx.scene.Node;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Rectangle;
 
 public class GameLoop{
-	private Group snakeGroup;
-	private Group frogGroup;
+
 	private Snake snake;
+	private ArrayList<Rectangle> frogs =  new ArrayList<>();
 	private Pane parentPane;
 	
 	public GameLoop(Group snakeGroup, Group frogGroup, Pane parentPane) {
-		this.snakeGroup = snakeGroup;
-		this.frogGroup = frogGroup;
 		this.parentPane = parentPane;
 	}
 	
 	public void start() {
 		createListeners();
-		createSnake();
+		createFrogs(3);
+		createSnake(5);
+		
 		Thread snakeThread = new Thread(snake, "Snake");
 		snakeThread.start();	
 	}
@@ -56,13 +59,22 @@ public class GameLoop{
         });
 	}
 	
-	private void createSnake() {
+	private void createSnake(int size) {
 	
-		snake = new Snake(5);
+		snake = new Snake(size, parentPane.getPrefHeight(), parentPane.getPrefWidth(), frogs);
 
 		List<Circle> body = snake.getBody();
 		for( int i = 0; i < body.size(); i++) {
-			snakeGroup.getChildren().add(body.get(i));
+			parentPane.getChildren().add(body.get(i));
+		}
+	}
+	
+	private void createFrogs(int count) {
+		
+		for(int i = 0 ; i < count; i++) {
+			Frog frog = new Frog( parentPane.getPrefHeight(), parentPane.getPrefWidth());
+			frogs.add(frog.getBody());
+			parentPane.getChildren().add(frog.getBody());
 		}
 	}
 
